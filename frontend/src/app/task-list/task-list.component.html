@@ -1,0 +1,108 @@
+<h1 class="text-center my-4">Task Manager</h1>
+
+<!-- Card Container -->
+<div class="card col-md-10 mx-auto shadow-lg p-4 mb-4 rounded-lg border-0">
+
+    <!-- Table with Filters and Pagination -->
+    <p-table #dt1 [value]="tasks" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [paginator]="true"
+        [globalFilterFields]="['Name', 'priority', 'createdAt', 'dueDate', 'status']">
+
+        <!-- Table Caption -->
+        <ng-template #caption>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (click)="clear(dt1)"
+                    severity="info" />
+                <div class="ml-auto d-flex align-items-center">
+                    <p-button label="Add New Task" icon="pi pi-plus" [raised]="true" severity="help"
+                        (click)="openNewTask()" />
+                </div>
+            </div>
+        </ng-template>
+
+        <!-- Table Header -->
+        <ng-template #header>
+            <tr>
+                <th pSortableColumn="name">
+                    Name <p-sortIcon field="name"></p-sortIcon>
+                    <p-columnFilter type="text" field="name" display="menu" />
+                </th>
+                <th pSortableColumn="status">
+                    Status <p-sortIcon field="status"></p-sortIcon>
+                    <p-columnFilter field="status" matchMode="equals" display="menu">
+                        <ng-template #filter let-value let-filter="filterCallback">
+                            <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)"
+                                placeholder="Any">
+                                <ng-template let-option #item>
+                                    <p-tag [value]="option" [severity]="getStatus(option)" />
+                                </ng-template>
+                            </p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
+                </th>
+                <th pSortableColumn="priority">
+                    Priority <p-sortIcon field="priority"></p-sortIcon>
+                    <p-columnFilter field="priority" matchMode="equals" display="menu">
+                        <ng-template #filter let-value let-filter="filterCallback">
+                            <p-dropdown [ngModel]="value" [options]="priorities" (onChange)="filter($event.value)"
+                                placeholder="Any">
+                                <ng-template let-option #item>
+                                    <p-tag [value]="option" size="large" [severity]="getPriorityClass(option)" />
+                                </ng-template>
+                            </p-dropdown>
+                        </ng-template>
+                    </p-columnFilter>
+
+                </th>
+                <th pSortableColumn="createdAt">
+                    Created at <p-sortIcon field="createdAt"></p-sortIcon>
+                    <p-columnFilter type="date" field="createdAt" display="menu" dateFormat="dd/mm/yy" />
+                </th>
+                <th pSortableColumn="dueDate">
+                    Due Date <p-sortIcon field="dueDate"></p-sortIcon>
+                    <p-columnFilter type="date" field="dueDate" display="menu" dateFormat="dd/mm/yy" />
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+
+        <!-- Table Body -->
+        <ng-template #body let-task>
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>
+                    <p-tag [value]="formatEnum(task.status)" [severity]="getStatus(task.status)" />
+                </td>
+                <td>
+                    <p-tag [value]="formatEnum(task.priority)" [severity]="getPriorityClass(task.priority)" />
+                </td>
+                <td>{{ task.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ task.dueDate | date: 'dd/MM/yyyy' }}</td>
+                <td>
+                    <p-toggleswitch [ngModel]="isTaskCompleted(task)"
+                        (onChange)="onToggleChange($event, task)"></p-toggleswitch>
+                </td>
+                <td>
+                    <div class="d-flex gap-3">
+                        <p-confirmpopup />
+                        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger"
+                            (onClick)="confirmDeletion($event,task.id)" />
+                        <p-button icon="pi pi-search" [rounded]="true" [text]="true" [raised]="true" severity="info"
+                            (click)="viewTaskDetails(task)"></p-button>
+                        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" severity="warn"
+                            (onClick)="openEditTaskDialog(task)" />
+
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+
+        <!-- Empty Message -->
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="5" class="text-center text-muted">No tasks found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<p-toast />

@@ -1,0 +1,11 @@
+<div *ngIf="task">
+    <p><strong>Name :</strong> {{ task.name }}</p>
+    <p><strong>Status :</strong> {{ task.status }}</p>
+    <p><strong>Priority :</strong> {{ task.priority }}</p>
+    <p><strong>Creation date :</strong> {{ task.createdAt | date: 'dd/MM/yyyy' }}</p>
+    <p><strong>Due date :</strong> {{ task.dueDate | date: 'dd/MM/yyyy' }}</p>
+    <p><strong>Description :</strong> {{ task.description }}</p>
+</div>
+<p-footer>
+    <p-button label="Cancel" icon="pi pi-times" (click)="hideDialog()" severity="secondary" size="small"></p-button>
+</p-footer>

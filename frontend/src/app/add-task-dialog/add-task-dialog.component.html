@@ -1,0 +1,39 @@
+<form [formGroup]="taskForm" (ngSubmit)="addTask()" class="mb-2">
+    <p-floatlabel variant="on" class="my-3">
+        <input pInputText id="name" formControlName="name" autocomplete="off" fluid />
+        <label for="name">Name</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="my-3">
+        <div class="card flex justify-center">
+            <p-select id="status" [options]="statuses" formControlName="status" fluid />
+        </div>
+        <label for="status">Status</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="my-3">
+        <div class="card flex justify-center">
+            <p-select id="priority" [options]="priorities" formControlName="priority" fluid />
+        </div>
+        <label for="priority">Priority</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="my-3 full-width">
+        <p-datepicker id="dueDate" formControlName="dueDate" fluid inputId="dueDate" showIcon iconDisplay="input"
+            appendTo="body" />
+        <label for="dueDate">Due Date</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="my-3">
+        <textarea pTextarea id="description" formControlName="description" rows="5" cols="30" style="resize: none"
+            class="h-full" fluid></textarea>
+        <label for="description">Description</label>
+    </p-floatlabel>
+
+    <div class="p-field d-flex justify-content-between">
+        <p-button type="button" label="Cancel" icon="pi pi-times" (click)="cancel()" [raised]="true"
+            severity="secondary"></p-button>
+        <p-button type="submit" label="Add Task" icon="pi pi-check" [disabled]="taskForm.invalid" [raised]="true"
+            severity="contrast"></p-button>
+    </div>
+</form>

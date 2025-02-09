@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #dbecff 0%, #f4cdff 100%);
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+}
