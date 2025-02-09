@@ -99,4 +99,4 @@ Build a simplified Task Management Application where users can:
 
 ### Time Limit
 
-Candidates are expected to submit their solution within **5 calendar days** (including weekends) from the time they receive the assignment details.
+Candidates are expected to submit their solution within **3 calendar days** (including weekends) from the time they receive the assignment details.
